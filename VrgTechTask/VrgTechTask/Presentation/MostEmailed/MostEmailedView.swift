@@ -48,6 +48,13 @@ class MostEmailedView: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         setupUI()
+        if !NetworkMonitor.shared.isConnected {
+            let alertController = UIAlertController(title: "Internet connection failed", message: nil, preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default) { _ in
+            }
+            alertController.addAction(action)
+            self.present(alertController, animated: true)
+        }
     }
     
     private func setupBinding() {
