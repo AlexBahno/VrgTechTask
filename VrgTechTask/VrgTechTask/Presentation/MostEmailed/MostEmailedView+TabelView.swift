@@ -18,7 +18,7 @@ extension MostEmailedView: UITableViewDelegate, UITableViewDataSource {
                 as? ArticleTableRowViewCell else {
             return UITableViewCell()
         }
-        cell.setupCell(with: ArticleTableRowViewModel(with: viewModel.articles[indexPath.row]))
+        cell.setupCell(with: ArticleTableRowViewModel(with: viewModel.articles[indexPath.row]), isShowStarImage: true)
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         return cell

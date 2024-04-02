@@ -138,8 +138,9 @@ class ArticleTableRowViewCell: UITableViewCell {
         publishedAndAuthorStack.addArrangedSubview(authorLabel)
     }
     
-    func setupCell(with viewModel: ArticleTableRowViewModel) {
+    func setupCell(with viewModel: ArticleTableRowViewModel, isShowStarImage: Bool) {
         self.viewModel = viewModel
+        self.savedImage.isHidden = !isShowStarImage
         addTapGesture()
         setupBinding()
         titleLabel.text = viewModel.title

@@ -18,7 +18,7 @@ extension FavouriteArticlesView: UITableViewDelegate, UITableViewDataSource {
                 as? ArticleTableRowViewCell else {
             return UITableViewCell()
         }
-        cell.setupCell(with: ArticleTableRowViewModel(with: viewModel.manager.articles[indexPath.row]))
+        cell.setupCell(with: ArticleTableRowViewModel(with: viewModel.manager.articles[indexPath.row]), isShowStarImage: false)
         cell.backgroundColor = .white
         cell.selectionStyle = .none
         return cell
@@ -31,5 +31,16 @@ extension FavouriteArticlesView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vm = ArticleDetailsViewModel(url: viewModel.manager.articles[indexPath.row].url ?? "")
         navigationController?.pushViewController(ArticleDetailsView(viewModel: vm), animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, success) in
+            self.viewModel.manager.articles[indexPath.row].deleteMovie()
+            self.viewModel.manager.fetchAllArticles()
+            self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        }
+        
+        let swipeActions = UISwipeActionsConfiguration(actions: [delete])
+        return swipeActions
     }
 }
